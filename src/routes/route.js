@@ -1,63 +1,14 @@
 const express = require('express');
-const { property } = require('lodash');
 const router = express.Router();
-const app = express()
-app.use(express.json())
+const BookModel= require("../books/bookModel")
+const BookControllers= require("../controllers/bookControllers")
 
-let players =
-    [
-        {
-            "name": "manish",
-            "dob": "1/1/1995",
-            "gender": "male",
-            "city": "jalandhar",
-            "sports": [
-                "swimming"
-            ]
-        },
-        {
-            "name": "gopal",
-            "dob": "1/09/1995",
-            "gender": "male",
-            "city": "delhi",
-            "sports": [
-                "soccer"
-            ],
-        },
-        {
-            "name": "lokesh",
-            "dob": "1/1/1990",
-            "gender": "male",
-            "city": "mumbai",
-            "sports": [
-                "soccer"
-            ],
-        },
-    ]
-
-router.post('/players', function (req, res) {
-
-    
-    const newPlayer = req.body;
-    let temp = 0;
-    for (let i = 0; i < players.length; i++) {
-        if (newPlayer.name == players[i].name) {
-            temp++;
-            break;
-
-        }
-
-    }
-    if (temp == 0) {
-       
-       res.send({ "new player joined": newPlayer })
-       console.log("new player joined", newPlayer,players)
-       players.push(newPlayer);
-    }
-
-    else {
-        res.send({ error: "the player already exists" })
-    }
+router.get("/test-me", function (req, res) {
+    res.send("My first ever api!")
 })
+
+router.post("/createBook", BookControllers.createBook  )
+
+router.get("/getBooksData", BookControllers.getBooksData)
 
 module.exports = router;
