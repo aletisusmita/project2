@@ -48,3 +48,10 @@ const getDnPv = async function(req,res){
     res.send({smg:x}) 
 }    
 module.exports.getDnPv =getDnPv
+
+
+const mwinfo = function(req,res,next){
+    
+     res.send("this is the end of middleware")
+    }
+    module.exports.mwinfo=mwinfo

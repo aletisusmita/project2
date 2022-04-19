@@ -4,6 +4,9 @@ const router = express.Router();
 const allControllers= require("../controllers/newControllers")
 const BDController = require("../controllers/BDController")
 
+
+const middleware = require("../middlewares/middlewares.js") 
+
 router.get("/test-me", function (req, res) {
     res.send("My first ever api!")
 })
@@ -21,7 +24,8 @@ router.get("/test-me", function (req, res) {
 // router.post("/createNewAuthor1", newController.creatNewAuthor)
 
 
-const newController = require("../controllers/newControllers")
+const newController = require("../controllers/newControllers");
+const { middleware2 } = require('../middlewares/middlewares');
 
 
 router.post("/createNewBook", newController.createNewBook)
@@ -37,4 +41,6 @@ router.post("/createDevloper", BDController.createDevloper)
 router.get("/getScholarshipDevloper", BDController.getScholarshipDevloper)
 router.get("/getDnPv", BDController.getDnPv)
 
+
+router.get("/middlewareRequest",middleware.middleware1 ,middleware.middleware2,middleware.middleware3,middleware.middleware4,middleware.middleware5,BDController.mwinfo)
 module.exports = router;
