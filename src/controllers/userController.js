@@ -1,7 +1,7 @@
 const registrationForm = require('../Models/registrationForm')
 const jwt = require ("JsonWebToken")
 const { default: mongoose } = require('mongoose')
-const userId= mongoose.Schema.Types.ObjectId
+
 
 const registerUser = async function(req,res){
     let userDetail = req.body
@@ -47,9 +47,9 @@ module.exports.userLogin = userLogin
     
     let decodedToken = jwt.verify(token, "Jolly-LLB");
     if (!decodedToken)
-      return res.send({ status: false, msg: "token is invalid" });
+      return res.send({ status: false, msg: "token is invalid" }); // issue: token matching with user
     
-    let userId= req.params.userId
+    let userId= req.query.userId
     let userDetails = await registrationForm.findById(userId)
     if (!userDetails)
       return res.send({ status: false, msg: "No such user exists" });
@@ -58,12 +58,24 @@ module.exports.userLogin = userLogin
   };
   module.exports.getRegisteredUser = getRegisteredUser
       
-
-
+ 
+ 
   const updateUserData = async function (req, res) {
+
+    let token = req.headers["x-Auth-token"];
+    if (!token) token = req.headers["x-auth-token"];
+  
+    if (!token) return res.send({ status: false, msg: "token must be present" });
+  
+    console.log(token);
+     
     
-      let userId = req.params.userId;
-      let user = await registrationForm.findById(userId);
+    let decodedToken = jwt.verify(token, "Jolly-LLB");
+    if (!decodedToken)
+      return res.send({ status: false, msg: "token is invalid" });
+    
+      let userId = req.query.userId;
+      let user = await registrationForm.findOneAndUpdate(userId);
       
       if (!user) {
         return res.send("No such user exists");
@@ -74,3 +86,30 @@ module.exports.userLogin = userLogin
       res.send({ status: updatedUser, data: updateUserData });
     };
     module.exports.updateUserData = updateUserData
+
+ 
+ const deleteUser = async function(req,res){
+
+  let token = req.headers["x-Auth-token"];
+    if (!token) token = req.headers["x-auth-token"];
+  
+    if (!token) return res.send({ status: false, msg: "token must be present" });
+  
+    console.log(token);
+     
+    
+    let decodedToken = jwt.verify(token, "Jolly-LLB");
+    if (!decodedToken)
+      return res.send({ status: false, msg: "token is invalid" });
+
+            let userId = req.query.userId
+            let  findUser= await registrationForm.findById(userId);
+            if( !findUser ){
+
+            return res.send("user not existes")
+       }
+       let updatedUser = await registrationForm.findOneAndUpdate({_id: userId}, {isDeleted: true}, {new: true})
+  
+       res.send({"deleted user is": updatedUser})
+    }
+    module.exports.deleteUser=deleteUser 

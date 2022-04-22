@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
-// middleware not working ?
+// middleware 
 app.use(
   function(req,res, next){
     let date = new Date
