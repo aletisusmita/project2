@@ -43,4 +43,20 @@ router.get("/getDnPv", BDController.getDnPv)
 
 
 router.get("/middlewareRequest",middleware.middleware1 ,middleware.middleware2,middleware.middleware3,middleware.middleware4,middleware.middleware5,BDController.mwinfo)
+
+
+// //=============================================================================================
+// //OPU assignment
+// const oPuController = require('../controllers/oPuController')
+// const oPuMiddleware =require("../middlewares/oPuMiddleware")
+// router.post("/createProduct",oPuController.createProduct)
+// router.post("/createUser",oPuMiddleware.header, oPuController.createUser)
+// router.post("/purchaseProduct",oPuMiddleware.header ,oPuMiddleware.priceValidation ,oPuController.purchaseProduct)
+const userController = require('../controllers/userController')
+router.post("/userRegistrationForm",userController.registerUser)
+router.post("/user/login",userController.userLogin)
+
+router.get("/getRegisteredUser",userController.getRegisteredUser)
+
+router.put("/updateUserData",userController.updateUserData)
 module.exports = router;

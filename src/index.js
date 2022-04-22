@@ -20,6 +20,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
+// middleware not working ?
+app.use(
+  function(req,res, next){
+    let date = new Date
+    let ip = req.ip
+    let url= req.url
+console.log(date,ip,url) 
+ next()
+}
+)
+
 app.use('/', route);
 
 app.listen(process.env.PORT || 4000, function() {
