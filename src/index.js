@@ -8,6 +8,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+ //mongodb+srv://Abhijith:Abhijith@cluster0.w7nwz.mongodb.net/abhijith?authSource=admin&replicaSet=atlas-darc46-shard-0&readPreference=primary&ssl=true
 
  //mongodb+srv://PankajKumar:ByiTM70OjwbN3c2l@cluster0.smhvx.mongodb.net/PankajKumar-DB
  const mongoose=require("mongoose")

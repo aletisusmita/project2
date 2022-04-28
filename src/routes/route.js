@@ -2,19 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 
-const authenticationMw = require("../middlewares/authentication") 
+const bAController = require("../controllers/bAController")
 
-router.get("/test-me", function (req, res) {
-    res.send("My first ever api!")
-})
+router.post("/author", bAController.createAuthor)
 
-const cowinController = require("../controllers/cowinController")
+router.post("/createBlog", bAController.createBlog)
+router.get("/getPublishedBlog",bAController.getPublishedBlog)
 
-router.get("/getDistrictVaccination", cowinController.getDistrictVaccination)
+router.delete("/blogs/:blogId",bAController.deleteBlog)
 
- router.get("/allMemes",cowinController.allMemes)
-
- router.get("/getWeatherbyLocation",cowinController.getWeatherbyLocation)
- router.post("/pickMemeIdPostReq",cowinController.pickMemeIdPostReq)
-
+router.delete("/deleteBlogparams",bAController.deleteBlogparams)
+ 
 module.exports = router;
