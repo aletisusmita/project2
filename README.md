@@ -4,7 +4,7 @@ Backend cohort March 2022 - July 2022
 Uranium
 Repository for backend cohort - Uranium
 
-Blogging Site Mini Project Requirement
+Blogging Site Mini Project Requirement 
 Phase I
 Models
 Author Model

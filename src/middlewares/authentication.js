@@ -1,24 +1,48 @@
-
 const jwt = require("jsonwebtoken")
+const blogModel = require("../models/blogModel")
 
-const authenticationMw = function(req,res,next ) {
-
-    let token = req.headers["x-Auth-token"];
+const authenticate = async function (req, res, next) {
     try{
-      if (!token) token = req.headers["x-auth-token"];
-    
-      if (!token) return res.send({ status: false, msg: "token must be present" });
-    
-      console.log(token);
-       
-     
-      let decodedToken = jwt.verify(token, "Jolly-LLB");
-      if (!decodedToken)
-      return res.send({ status: false, msg: "token is invalid" })
-      next()
-    } catch(error){
-      console.log(error)
+        let token = req.headers["x-api-key"]
+        if(!token)
+        token = req.headers["x-Api-key"]
+        if(!token)
+        return res.status(400).send({status: false, msg: "token is mandatory"})
+
+        let decodeToken = jwt.verify(token, "project-one")
+        if(!decodeToken)
+        return res.status(401).send({status: false, msg: "invalid Token"})
+
+
+        next()
+    }
+    catch(err){
+        console.log(err.message)
+        res.status(500).send({error:err.message})
     }
 }
 
-module.exports.authenticationMw = authenticationMw
+
+const authorise = async function(req, res, next){
+    try{
+
+        let authorId = req.query.authorId
+        let author_Id = decodeToken.author_Id
+        let blogId = req.params.blogId;
+
+        let blog_Id = await blogModel.findOne({_id : blogId}).populate()
+
+        if (blog_Id.authorId != authorId || author_Id != authorId)
+        return res.status(400).send({status: false, msg : "not authorised"})
+
+
+        // if(author_Id != authorId)
+        // return res.status(400).send({status: false, msg : "not authorised"})
+
+    } catch {
+        res.status(500).send({status: false , msg: "err"})
+    }
+}
+
+module.exports.authenticate = authenticate
+module.exports.authorise = authorise

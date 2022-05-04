@@ -1,16 +1,22 @@
-const express = require('express');
+const express = require ("express");
 const router = express.Router();
+const jwt = require("jsonwebtoken")
+
+const authorController = require("../controllers/authorController")
+const blogController = require ("../controllers/blogController")
+const middleware = require("../middlewares/authentication")
 
 
-const bAController = require("../controllers/bAController")
+router.post("/createAuthor", authorController.createAuthor)
 
-router.post("/author", bAController.createAuthor)
+router.post("/login",authorController.login)
 
-router.post("/createBlog", bAController.createBlog)
-router.get("/getPublishedBlog",bAController.getPublishedBlog)
+router.post("/createBlog", middleware.authenticate, blogController.createBlog)
+router.get("/getBlogs",middleware.authenticate, blogController.getBlogs)
+router.put("/updateBlog/:blogId",middleware.authenticate, middleware.authorise, blogController.updateBlog)
+router.delete("/deleteBlog/:blogId",middleware.authenticate, middleware.authorise, blogController.deleteBlog)
+router.delete("/deleteQuery", middleware.authenticate, middleware.authorise, blogController.deleteQuery)
 
-router.delete("/blogs/:blogId",bAController.deleteBlog)
 
-router.delete("/deleteBlogparams",bAController.deleteBlogparams)
- 
-module.exports = router;
+
+module.exports=router
