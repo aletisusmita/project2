@@ -4,10 +4,19 @@ const jwt = require("jsonwebtoken")
 
 const authorController = require("../controllers/authorController")
 const blogController = require ("../controllers/blogController")
-const middleware = require("../middlewares/authentication")
-
+const middleware = require("../middlewares/auth")
+//===========================================Phase-1============================================================
 
 router.post("/createAuthor", authorController.createAuthor)
+
+// router.post("/createBlog",  blogController.createBlog)
+// router.get("/getBlogs", blogController.getBlogs)
+// router.put("/updateBlog/:blogId", blogController.updateBlog)
+// router.delete("/deleteBlog/:blogId",blogController.deleteBlog)
+// router.delete("/deleteQuery", blogController.deleteQuery)
+
+
+//================================================Phase-2=========================================================
 
 router.post("/login",authorController.login)
 
@@ -19,4 +28,4 @@ router.delete("/deleteQuery", middleware.authenticate, middleware.authorise, blo
 
 
 
-module.exports=router
+module.exports=router 
