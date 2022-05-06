@@ -1,7 +1,7 @@
 
 const interModel = require("../Models/interModel")
 const collegeModel = require("../Models/collegeModel")
-const { db } = require("../Models/interModel")
+
 
 
 const createIntern = async function (req, res) {
