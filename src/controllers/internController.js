@@ -34,7 +34,7 @@ const getInter = async function (req, res) {
 
         let collegeId = savedCollege._id
 
-        const savedIntern = await interModel.find({ collegeId: collegeId }).select({ isDeleted: 0, createdAt: 0, updatedAt: 0, __v: 0 })
+        const savedIntern = await interModel.find({ collegeId: collegeId }).select({ isDeleted: 0, createdAt: 0, updatedAt: 0, __v: 0,collegeId:0 })
 
         // savedCollege["Interests"] = savedIntern
         //let obj = {...savedCollege,interests:savedIntern}
