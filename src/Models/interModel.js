@@ -21,7 +21,7 @@ const internSchema = new mongoose.Schema({
         type: Number, unique: true,
         validate: {
             validator: function (v) {
-                return /^\(?([6-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(v)                     ///\d{6-9}-\d{3}-\d{4}/.test(v)
+                return /^\(?([6-9]{1})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{5})$/.test(v)                    
             },
             message: props => `${props.value} is not a valid mobile number.....`
         },
